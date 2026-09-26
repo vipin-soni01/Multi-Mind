@@ -1,12 +1,3 @@
-/* =========================================================
-   AI Hub — Chat Workspace logic
-   -----------------------------------------------------------
-   STATUS: FRONTEND PROTOTYPE — MOCK RESPONSES ONLY.
-   No AI provider is connected. Every reply in here is
-   generated locally by mockReply() below. Swap that one
-   function out (see the "BACKEND INTEGRATION" note at the
-   bottom of this file) once real API calls exist.
-   ========================================================= */
 
 /* ---------- 1. Model registry ----------
    This is the single source of truth for which AI platforms

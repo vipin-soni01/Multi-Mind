@@ -1,6 +1,200 @@
-<!--
-  Placeholder.
-  Move your existing dashboard prototype (sidebar nav, overview
-  stats, AI platform cards, activity charts, import section,
-  settings page) into this file once it's ready to share.
--->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Hub — Dashboard</title>
+<script>
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('aihub_theme') || 'dark');
+</script>
+<link rel="stylesheet" href="../css/shared.css">
+<link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+
+<div class="dash">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="dash-sidebar">
+    <div class="dash-sidebar__top">
+      <div class="brand" style="margin-bottom:16px;">
+        <span class="brand__mark">AI</span>
+        <span class="brand__name">Hub</span>
+      </div>
+      <a href="chat.html" class="btn-open-chat">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 3.5h12v7H6l-3 3v-3H2v-7z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        Open Chat Workspace
+      </a>
+    </div>
+
+    <nav>
+      <ul class="nav-list">
+        <li class="nav-item is-active" data-view="overview">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/></svg>
+          Overview
+        </li>
+        <li class="nav-item" data-view="conversations">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 3.5h12v7H6l-3 3v-3H2v-7z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+          Conversations
+        </li>
+        <li class="nav-item" data-view="platforms">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M2 8h12M8 2c1.8 1.7 1.8 10.3 0 12M8 2c-1.8 1.7-1.8 10.3 0 12" stroke="currentColor" stroke-width="1.1"/></svg>
+          Platforms
+        </li>
+        <li class="nav-item" data-view="import">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0 0L5 7m3 3l3-3M3 12v1.5h10V12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Import data
+        </li>
+        <li class="nav-item" data-view="settings">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.2" stroke="currentColor" stroke-width="1.3"/><path d="M8 2.5v1.4M8 12v1.5M13.5 8H12M4 8H2.5M11.8 4.2l-1 1M5.2 10.8l-1 1M11.8 11.8l-1-1M5.2 5.2l-1-1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Settings
+        </li>
+      </ul>
+    </nav>
+
+    <div class="dash-sidebar__bottom">
+      <button class="theme-toggle" id="themeToggle"></button>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="dash-main">
+
+    <!-- ---------------- OVERVIEW ---------------- -->
+    <section class="dash-view is-active" data-view="overview">
+      <header class="dash-view__head">
+        <h1>Overview</h1>
+        <p>What's happening across your AI Hub workspace.</p>
+      </header>
+
+      <div class="stat-grid" id="statGrid"></div>
+
+      <div class="panel-grid">
+        <div class="panel">
+          <h2>Activity — last 7 days</h2>
+          <p class="panel__sub">Conversations active per day</p>
+          <div id="activityChart"></div>
+        </div>
+        <div class="panel">
+          <h2>Platform distribution</h2>
+          <p class="panel__sub">Share of conversations by model</p>
+          <div id="platformChart"></div>
+        </div>
+      </div>
+
+      <h2 class="section-label">AI platforms</h2>
+      <div class="platform-card-grid" id="platformCardsOverview"></div>
+    </section>
+
+    <!-- ---------------- CONVERSATIONS ---------------- -->
+    <section class="dash-view" data-view="conversations">
+      <header class="dash-view__head">
+        <h1>Conversations</h1>
+        <p>Everything created in AI Hub or imported from another platform.</p>
+      </header>
+
+      <div class="toolbar">
+        <div class="toolbar__search">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.4"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <input type="text" id="convoSearch" placeholder="Search by title">
+        </div>
+        <select id="convoFilter">
+          <option value="all">All platforms</option>
+          <option value="chatgpt">ChatGPT</option>
+          <option value="claude">Claude</option>
+          <option value="gemini">Gemini</option>
+        </select>
+      </div>
+
+      <div class="convo-table" id="convoTable"></div>
+    </section>
+
+    <!-- ---------------- PLATFORMS ---------------- -->
+    <section class="dash-view" data-view="platforms">
+      <header class="dash-view__head">
+        <h1>Platforms</h1>
+        <p>Connection status and usage per AI provider.</p>
+      </header>
+      <div class="platform-card-grid" id="platformCardsFull"></div>
+    </section>
+
+    <!-- ---------------- IMPORT ---------------- -->
+    <section class="dash-view" data-view="import">
+      <header class="dash-view__head">
+        <h1>Import data</h1>
+        <p>Bring in conversation exports from another AI platform.</p>
+      </header>
+
+      <div class="import-drop" id="importDrop">
+        <svg width="26" height="26" viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0 0L5 7m3 3l3-3M3 12v1.5h10V12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p><strong>Drop a JSON export here</strong> or click to browse</p>
+        <p class="import-drop__hint">Expected shape: an array of { title, platform, messages: [...] }</p>
+        <input type="file" id="importFile" accept="application/json" hidden>
+      </div>
+
+      <p class="import-note">
+        Imports are read and stored locally in your browser — nothing is uploaded anywhere.
+        Full one-click export support for ChatGPT / Claude / Gemini's own export formats
+        requires backend parsing and isn't built yet; for now, format your export to the
+        shape above before importing.
+      </p>
+
+      <h2 class="section-label">Recently imported</h2>
+      <div class="convo-table" id="importedTable"></div>
+    </section>
+
+    <!-- ---------------- SETTINGS ---------------- -->
+    <section class="dash-view" data-view="settings">
+      <header class="dash-view__head">
+        <h1>Settings</h1>
+        <p>Appearance, data, and connection preferences.</p>
+      </header>
+
+      <div class="settings-block">
+        <h2>Appearance</h2>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row__title">Theme</div>
+            <div class="settings-row__desc">Switch between dark and light mode.</div>
+          </div>
+          <button class="theme-toggle" id="themeToggleSettings" style="width:auto;"></button>
+        </div>
+      </div>
+
+      <div class="settings-block">
+        <h2>Your data</h2>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row__title">Export conversations</div>
+            <div class="settings-row__desc">Download everything stored in this browser as JSON.</div>
+          </div>
+          <button class="btn-secondary" id="exportDataBtn">Export</button>
+        </div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row__title">Clear all conversations</div>
+            <div class="settings-row__desc">Permanently deletes local conversation history and imports.</div>
+          </div>
+          <button class="btn-danger" id="clearDataBtn">Clear data</button>
+        </div>
+      </div>
+
+      <div class="settings-block">
+        <h2>AI provider connections</h2>
+        <p class="panel__sub" style="margin:-4px 0 14px;">
+          API keys are never entered or stored in the browser — once the backend exists,
+          you'll configure these there. Shown here for reference only.
+        </p>
+        <div class="settings-row" id="settingsProviderRow-chatgpt"></div>
+        <div class="settings-row" id="settingsProviderRow-claude"></div>
+        <div class="settings-row" id="settingsProviderRow-gemini"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="../js/shared.js"></script>
+<script src="../js/dashboard.js"></script>
+</body>
+</html>

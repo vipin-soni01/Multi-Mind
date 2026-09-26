@@ -1,0 +1,101 @@
+/* =========================================================
+   AI Hub — shared tokens & primitives
+   Loaded by every page BEFORE its page-specific stylesheet
+   (chat.css, dashboard.css). Anything used on more than one
+   page belongs here so the two pages can't drift apart.
+   ========================================================= */
+
+:root{
+  --hub-bg:            #12141A;
+  --hub-panel:         #191C24;
+  --hub-panel-raised:  #1F232D;
+  --hub-border:        #2A2E39;
+  --hub-text:          #E7E9EE;
+  --hub-text-dim:      #9198A9;
+  --hub-text-faint:    #5C6377;
+  --hub-accent:        #E8A33D;   /* warm amber — the one bold color in the UI */
+  --hub-accent-dim:    rgba(232,163,61,0.14);
+
+  /* per-model identity colors — used only as small badges/borders,
+     never as backgrounds, so the UI stays calm */
+  --model-chatgpt:  #74AA9C;
+  --model-claude:   #D97757;
+  --model-gemini:   #6C8EEF;
+
+  --good:  #6FBF8B;
+  --warn:  #E8A33D;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --font-ui: -apple-system, "Segoe UI", Inter, system-ui, sans-serif;
+}
+
+[data-theme="light"]{
+  --hub-bg:            #F5F5F3;
+  --hub-panel:         #FFFFFF;
+  --hub-panel-raised:  #FAFAF8;
+  --hub-border:        #E4E3DE;
+  --hub-text:          #1B1D22;
+  --hub-text-dim:      #666B78;
+  --hub-text-faint:    #9A9FAC;
+  --hub-accent-dim:    rgba(232,163,61,0.16);
+}
+
+*{ box-sizing: border-box; }
+html, body{ margin:0; padding:0; }
+body{ background: var(--hub-bg); }
+
+/* ---------------- brand mark (sidebar top, both pages) ---------------- */
+
+.brand{
+  display:flex; align-items:baseline; gap:2px;
+  font-weight: 600; font-size: 15px; letter-spacing: -0.01em;
+  font-family: var(--font-ui);
+}
+.brand__mark{ color: var(--hub-accent); }
+.brand__name{ color: var(--hub-text); }
+
+/* ---------------- generic sidebar nav list (dashboard) ---------------- */
+
+.nav-list{ list-style:none; margin:0; padding: 8px; }
+.nav-item{
+  display:flex; align-items:center; gap:10px;
+  padding: 9px 11px;
+  border-radius: var(--radius-sm);
+  color: var(--hub-text-dim);
+  font-size: 13.5px;
+  text-decoration:none;
+  cursor:pointer;
+  border: 1px solid transparent;
+  font-family: var(--font-ui);
+}
+.nav-item svg{ flex-shrink:0; opacity:.8; }
+.nav-item:hover{ background: var(--hub-panel-raised); color: var(--hub-text); }
+.nav-item.is-active{
+  background: var(--hub-accent-dim);
+  border-color: rgba(232,163,61,0.35);
+  color: var(--hub-text);
+}
+
+/* ---------------- theme toggle (both pages) ---------------- */
+
+.theme-toggle{
+  display:flex; align-items:center; gap:8px;
+  width:100%;
+  background: transparent;
+  border: 1px solid var(--hub-border);
+  border-radius: var(--radius-sm);
+  padding: 7px 10px;
+  color: var(--hub-text-dim);
+  font-size: 12.5px;
+  font-family: var(--font-ui);
+  cursor:pointer;
+}
+.theme-toggle:hover{ color: var(--hub-text); background: var(--hub-panel-raised); }
+.theme-toggle svg{ flex-shrink:0; }
+
+/* ---------------- scrollbars (both pages, webkit) ---------------- */
+
+*::-webkit-scrollbar{ width:8px; height:8px; }
+*::-webkit-scrollbar-thumb{ background: var(--hub-border); border-radius: 8px; }
+*::-webkit-scrollbar-track{ background: transparent; }

@@ -1,9 +1,3 @@
-/* =========================================================
-   AI Hub — Chat Workspace styles
-   Palette + type tokens are namespaced so this file can be
-   dropped alongside the existing dashboard.css without
-   clashing (all rules are scoped under .app).
-   ========================================================= */
 
 :root{
   --hub-bg:            #12141A;
