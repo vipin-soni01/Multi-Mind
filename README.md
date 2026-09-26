@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# AI Hub
+# Multi Mind
 
 A unified workspace for chatting with and comparing multiple AI models
 (ChatGPT, Claude, Gemini) from one dashboard. Vanilla HTML/CSS/JS on the
