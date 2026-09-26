@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AI Hub
 
 A unified workspace for chatting with and comparing multiple AI models
@@ -59,3 +60,6 @@ mock data until the backend exists.
 - Shared styles/logic (e.g. the dark/light theme toggle, sidebar nav) can
   later move into `frontend/css/shared.css` and `frontend/js/shared.js` once
   the dashboard exists and duplication becomes visible.
+=======
+# Multi-Mind
+>>>>>>> eb219efa79253b37751e70861b23225bb6487a32
